@@ -1,0 +1,308 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+-- Started on 2025-11-03 17:46:39 CST
+
+\restrict xfbLBm5eB3Z1jIl6H1HR0xOk21CXxSl20mKlBOZbh30kM98AFTTJikcequ5dYiH
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE lsinclair;
+ALTER ROLE lsinclair WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB LOGIN NOREPLICATION NOBYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:ofDd0bNyySkeyT9Soj2YqQ==$KUU8UF5tiJNDcSkw2JItwWNK7eu7a8/wjpzYAsssh9M=:k4f1DzXga6C1KQrjPAbQFhLSvtDpkquJI5VRlxWR/I0=';
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:Tc7nJGi6gvGb57BNh2VLWg==$8Zc2UovTHcjL/k1yzmuXdiKTB41tnKzsoZqEwygOCXk=:3TAmmSTQv6pFKBsjhaQkQuZvp7h6qM8aLX9oMDrohTY=';
+
+--
+-- User Configurations
+--
+
+
+
+
+
+
+
+
+\unrestrict xfbLBm5eB3Z1jIl6H1HR0xOk21CXxSl20mKlBOZbh30kM98AFTTJikcequ5dYiH
+
+--
+-- Databases
+--
+
+--
+-- Database "template1" dump
+--
+
+\connect template1
+
+--
+-- PostgreSQL database dump
+--
+
+\restrict utyYDvhw320bOuILtgrwsUKJFTsh84MyLb0SeOYlz7DiyNqrIteWjfHdDy6k96H
+
+-- Dumped from database version 16.10
+-- Dumped by pg_dump version 16.10
+
+-- Started on 2025-11-03 17:46:39 CST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+-- Completed on 2025-11-03 17:46:40 CST
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict utyYDvhw320bOuILtgrwsUKJFTsh84MyLb0SeOYlz7DiyNqrIteWjfHdDy6k96H
+
+--
+-- Database "postgres" dump
+--
+
+\connect postgres
+
+--
+-- PostgreSQL database dump
+--
+
+\restrict cFVZUXdXjL3eCI99a1bxdcyHXfAbPzX9t6baC1GegfhbNFcDxF8MhbwVSX9UrNN
+
+-- Dumped from database version 16.10
+-- Dumped by pg_dump version 16.10
+
+-- Started on 2025-11-03 17:46:40 CST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+-- Completed on 2025-11-03 17:46:40 CST
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict cFVZUXdXjL3eCI99a1bxdcyHXfAbPzX9t6baC1GegfhbNFcDxF8MhbwVSX9UrNN
+
+--
+-- Database "testdb" dump
+--
+
+--
+-- PostgreSQL database dump
+--
+
+\restrict rzWc5CGFO2bG1b6mD5I2ysoSy3fixX3Nsl9P0yDOEnBiLG3WXosl9pMfRZyPbcD
+
+-- Dumped from database version 16.10
+-- Dumped by pg_dump version 16.10
+
+-- Started on 2025-11-03 17:46:40 CST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 4439 (class 1262 OID 16390)
+-- Name: testdb; Type: DATABASE; Schema: -; Owner: lsinclair
+--
+
+CREATE DATABASE testdb WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.UTF-8';
+
+
+ALTER DATABASE testdb OWNER TO lsinclair;
+
+\unrestrict rzWc5CGFO2bG1b6mD5I2ysoSy3fixX3Nsl9P0yDOEnBiLG3WXosl9pMfRZyPbcD
+\connect testdb
+\restrict rzWc5CGFO2bG1b6mD5I2ysoSy3fixX3Nsl9P0yDOEnBiLG3WXosl9pMfRZyPbcD
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 217 (class 1259 OID 24599)
+-- Name: posts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.posts (
+    p_id integer NOT NULL,
+    username character varying(255) NOT NULL,
+    title character varying(127) NOT NULL,
+    p_content text,
+    media character varying(255),
+    datetime timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    likes integer DEFAULT 0,
+    dislikes integer DEFAULT 0
+);
+
+
+ALTER TABLE public.posts OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 24598)
+-- Name: posts_p_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.posts_p_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.posts_p_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 4440 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: posts_p_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.posts_p_id_seq OWNED BY public.posts.p_id;
+
+
+--
+-- TOC entry 215 (class 1259 OID 24592)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    username character varying(255) NOT NULL,
+    pwd character varying(127) NOT NULL,
+    u_role character varying(6),
+    CONSTRAINT users_u_role_check CHECK ((((u_role)::text = 'reg'::text) OR ((u_role)::text = 'mod'::text) OR ((u_role)::text = 'admin'::text)))
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 4278 (class 2604 OID 24602)
+-- Name: posts p_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.posts ALTER COLUMN p_id SET DEFAULT nextval('public.posts_p_id_seq'::regclass);
+
+
+--
+-- TOC entry 4433 (class 0 OID 24599)
+-- Dependencies: 217
+-- Data for Name: posts; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.posts (p_id, username, title, p_content, media, datetime, likes, dislikes) FROM stdin;
+1	bobbert1234	Hey guys!	This is my first time on here. Nice to meet you all.	\N	2025-11-02 12:43:34.393776	0	0
+2	not-a-mod	UPDATE! NO COIN RACE BETTING	It has come to our attention that there have been racing bets placed on whose money runs the fastest. Please stop so you can let your quarter rest. (Happy April Fools)	\N	2025-11-02 12:43:34.393776	0	0
+\.
+
+
+--
+-- TOC entry 4431 (class 0 OID 24592)
+-- Dependencies: 215
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (username, pwd, u_role) FROM stdin;
+bobbert1234	fakepwd	reg
+not-a-mod	secret	mod
+not-an-admin	admin123	admin
+\.
+
+
+--
+-- TOC entry 4441 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: posts_p_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.posts_p_id_seq', 2, true);
+
+
+--
+-- TOC entry 4286 (class 2606 OID 24609)
+-- Name: posts posts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT posts_pkey PRIMARY KEY (p_id);
+
+
+--
+-- TOC entry 4284 (class 2606 OID 24597)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (username);
+
+
+--
+-- TOC entry 4287 (class 2606 OID 24610)
+-- Name: posts posts_username_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT posts_username_fkey FOREIGN KEY (username) REFERENCES public.users(username) ON DELETE CASCADE;
+
+
+-- Completed on 2025-11-03 17:46:40 CST
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict rzWc5CGFO2bG1b6mD5I2ysoSy3fixX3Nsl9P0yDOEnBiLG3WXosl9pMfRZyPbcD
+
+-- Completed on 2025-11-03 17:46:40 CST
+
+--
+-- PostgreSQL database cluster dump complete
+--
+
