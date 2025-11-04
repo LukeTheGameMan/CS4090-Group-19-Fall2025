@@ -16,8 +16,8 @@ SoundScape's primary features that will be included by the end of the project wi
 </br>
 
 ## Setting up the server
-The server is created using TypeScript and the database uses PostgreSQL. Prisma is used to generate and modify the schemas for the database automatically.
+The server is created using TypeScript and the database uses PostgreSQL. Prisma is used to generate and modify the schemas for the database automatically. If you are setting it up locally for the first time, run `npm install` in `server/` to install all of the dependencies needed.
 
-The schema is found at `server/src/prisma/schema.prisma`. If you make any changes to the schema, make sure to run `npx prisma migrate dev` in the `server/` directory to create a new migration from the changes in the Prisma schema and automatically apply it. After creating the new migration, run `npx prisma generate` in `server/` to generate the schema used for the database.
+The schema is found at `server/src/prisma/schema.prisma`. If you make any changes to the schema, make sure to run `npx prisma migrate dev` in the `server/` directory to create a new migration from the changes in the Prisma schema and automatically apply it. After creating the new migration, run `npx prisma generate` in `server/` to generate the schema used for the database. **These two commands only need to be ran if you are making changes to the database schema. Please do not make a new migration every time you start the server.**
 
 To run the server, run `npm run start` in `server/`, which should start the server on `http://localhost:3000`.
