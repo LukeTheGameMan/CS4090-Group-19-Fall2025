@@ -14,23 +14,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// normally, would want to have a "bridge" table (between User & Post for example) to minimize
+// join operations. however prisma handles this natively so bridge tables would just
+// increase query complexity.
+
 model User {
   user_id Int @id @default(autoincrement())
   password String @db.VarChar(127)
   email String @db.VarChar(127) @unique
   username String @db.VarChar(31) @unique
   permission_level Int @default(0) // 0 = default, 1 = mod, 2 = admin
-  posts Post[]
+  
+  // relations
+  posts_created Post[]
+  comments_created Comment[]
 }
 
 model Post {
   post_id Int @id @default(autoincrement())
-  author_id Int
-  author User @relation(fields: [author_id], references: [user_id])
   
   liked_by Int[] @default([])
   disliked_by Int[] @default([])
   
-  title String @db.VarChar(127)
-  content String?
+  title String @db.Text
+  content String
+
+  // relations
+  author_id Int
+  author User @relation(fields: [author_id], references: [user_id])
+  
+  comments Comment[]
+}
+
+model Comment {
+  comment_id Int @id @default(autoincrement())
+  content String @db.Text
+  liked_by Int[] @default([])
+  disliked_by Int[] @default([])
+  
+  // relations
+  post_id Int
+  parent_post Post @relation(fields: [post_id], references: [post_id])
+
+  user_id Int
+  parent_user User @relation(fields: [user_id], references: [user_id])
 }
