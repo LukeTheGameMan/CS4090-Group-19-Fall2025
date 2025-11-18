@@ -7,16 +7,21 @@ dotenv.config();
 
 const port = process.env.PORT;
 
+// theres a better way to do all of this im just lazy lol
 app.get('/', (req: Request, res: Response) => {
-    res.send('this is so poggers');
+    res.redirect('/index.html');
 });
 
 app.get('/login', (req: Request, res: Response) => {
-    res.redirect('main.html');
+    res.redirect('/main.html');
 });
 
 app.get('/guest', (req: Request, res: Response) => { 
-    res.redirect('main.html');
+    res.redirect('/main.html');
+});
+
+app.get('/signup', (req: Request, res: Response) => { 
+    res.redirect('/signup.html');
 });
 
 app.listen(port, () => {
