@@ -1,15 +1,11 @@
 import express, { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-import path from 'path';
+import dotenv from 'dotenv'
+import app from './app';
 
-const app = express();
-const prisma = new PrismaClient();
-const port = 3000;
+// load env variables
+dotenv.config();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../../web_dir')));
-
+const port = process.env.PORT;
 
 app.get('/', (req: Request, res: Response) => {
     res.send('this is so poggers');

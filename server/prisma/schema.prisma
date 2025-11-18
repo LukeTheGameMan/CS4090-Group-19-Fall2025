@@ -20,7 +20,7 @@ datasource db {
 
 model User {
   user_id Int @id @default(autoincrement())
-  password String @db.VarChar(127)
+  password_hash String
   email String @db.VarChar(127) @unique
   username String @db.VarChar(31) @unique
   permission_level Int @default(0) // 0 = default, 1 = mod, 2 = admin
