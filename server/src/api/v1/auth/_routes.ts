@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { loginUser, getCurrentUser } from './_controller'
-import { requireAuth } from './requireAuth'
+import { loginUser, getCurrentUser } from './_controller';
+import { requireAuth } from './requireAuth';
 
 const router = Router();
 

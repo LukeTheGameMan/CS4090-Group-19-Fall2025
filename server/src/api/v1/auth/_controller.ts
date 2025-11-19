@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcrypt'
-import { createToken } from './createToken'
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
+import { createToken } from './createToken';
 
 const prisma = new PrismaClient();
 
@@ -50,7 +50,13 @@ export async function getCurrentUser(req: Request, res: Response) {
 
     const userID = (req as any).user.user_id;
     const user = await prisma.user.findUnique({
-        where: { user_id: userID }
+        where: { user_id: userID },
+        select: { 
+            user_id: true,
+            username: true,
+            email: true,
+            permission_level: true
+        }
     });
     res.json({ user });
 }
