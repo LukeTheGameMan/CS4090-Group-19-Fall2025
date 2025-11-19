@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import app from './app';
+//import { registerUser } from './api/v1/';
 
 // load env variables
 dotenv.config();

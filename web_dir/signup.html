@@ -1,10 +1,38 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign-up">
+    <meta name="author" content="CS4090 Group 19">
+    <meta name="keywords" content="music, musician, song, tutorial, community, guide, forum, Q&A, theory, production, composing, composition, songwriting, recording, mixing, mastering">
+    <title>Sign-up</title>
 </head>
 <body>
-
+    <header>
+        <h1>SoundScape</h1>
+    </header>
+    <section id="form1">
+        <form id="signup">
+            <label for="username">
+                Username:
+            </label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="email">
+                Email:
+            </label>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="password">
+                Password:
+            </label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="button" onclick="signup()">Sign-up</button>
+        </form>
+        <p id="failMsg"></p>
+    </section>
+    <script src="script/signup.js"></script>
 </body>
 </html>
