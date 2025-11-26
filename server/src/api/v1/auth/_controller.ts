@@ -54,8 +54,7 @@ export async function getCurrentUser(req: Request, res: Response) {
         select: { 
             user_id: true,
             username: true,
-            email: true,
-            permission_level: true
+            email: true
         }
     });
     res.json({ user });

@@ -63,13 +63,35 @@ export async function registerUser(req: Request, res: Response) {
         // surprisingly, storing raw passwords in the database is probably not a good idea! :O
         const passwordHash = await bcrypt.hash(password, 8);
 
-        // actually create the user
+        // create User
         const newUser = await prisma.user.create({
             data: { 
                 username: username,
                 email: email,
-                password_hash: passwordHash,
-                permission_level: 0
+                password_hash: passwordHash
+            }
+        });
+
+        // create UserPermission
+        await prisma.userPermission.create({
+            data: {
+                user_id: newUser.user_id
+            }
+        });
+
+        // create UserPosts
+        await prisma.userPosts.create({
+            data: {
+                user_id: newUser.user_id,
+                username: newUser.username
+            }
+        });
+
+        // create UserComments
+        await prisma.userComments.create({
+            data: {
+                user_id: newUser.user_id,
+                username: newUser.username
             }
         });
 
