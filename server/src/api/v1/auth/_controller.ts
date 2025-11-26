@@ -43,11 +43,6 @@ export async function loginUser(req: Request, res: Response) {
     created to test if the token works lol
 */
 export async function getCurrentUser(req: Request, res: Response) {
-    if (!(req as any).user) return res.status(401).json({
-        success: false,
-        error: "Not authenticated"
-    });
-
     const userID = (req as any).user.user_id;
     const user = await prisma.user.findUnique({
         where: { user_id: userID },

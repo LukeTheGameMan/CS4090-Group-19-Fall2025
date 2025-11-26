@@ -48,7 +48,7 @@ model UserPosts {
 model Post {
   post_id Int @id @default(autoincrement())
   title String @db.Text
-  content String
+  content String @db.Text
   user_id Int
 }
 
