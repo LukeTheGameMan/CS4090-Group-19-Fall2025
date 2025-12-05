@@ -22,6 +22,8 @@ model User {
   password_hash String
   email String @db.VarChar(127) @unique
   username String @db.VarChar(31) @unique
+
+  posts Post[]
 }
 
 model UserPermission {
@@ -29,17 +31,17 @@ model UserPermission {
   permission_level Int @default(0)
 }
 
-model UserComments {
-  user_id Int @id
-  username String @db.VarChar(31) @unique
-  comments_created Int[] @default([]) // array of Comment IDs
-}
+// model UserComments {
+//   user_id Int @id
+//   username String @db.VarChar(31) @unique
+//   comments_created Int[] @default([]) // array of Comment IDs
+// }
 
-model UserPosts {
-  user_id Int @id
-  username String @db.VarChar(31) @unique
-  posts_created Int[] @default([]) // array of Post IDs
-}
+// model UserPosts {
+//   user_id Int @id
+//   username String @db.VarChar(31) @unique
+//   posts_created Int[] @default([]) // array of Post IDs
+// }
 
 /* 
   POSTS
@@ -50,36 +52,51 @@ model Post {
   title String @db.Text
   content String @db.Text
   user_id Int
+
+  postLikes PostLike[]
+  postDislikes PostDislike[]
+  comments Comment[]
+
+  user User @relation(fields: [user_id], references: [user_id])
 }
 
-model PostLikes {
-  post_id Int @id
-  liked_by Int[] @default([]) // array of User IDs
+model PostLike {
+  id Int @id @default(autoincrement())
+  post_id Int
+  user_id Int
+
+  post Post @relation(fields: [post_id], references: [post_id])
 }
 
-model PostDislikes {
-  post_id Int @id
-  disliked_by Int[] @default([]) // array of User IDs
+model PostDislike {
+  id Int @id @default(autoincrement())
+  post_id Int
+  user_id Int
+
+  post Post @relation(fields: [post_id], references: [post_id])
 }
 
-model PostComments {
-  post_id Int @id
-  comments Int[] @default([]) // array of Comment IDs
-}
+/* 
+  COMMENTS
+*/
 
 model Comment {
   comment_id Int @id @default(autoincrement())
   content String @db.Text
   post_id Int 
   user_id Int
+
+  post Post @relation(fields: [post_id], references: [post_id])
 }
 
-model CommentLikes {
-  comment_id Int @id
-  liked_by Int[] @default([]) // array of User IDs
+model CommentLike {
+  id Int @id @default(autoincrement())
+  comment_id Int
+  user_id Int
 }
 
-model CommentDislikes {
-  comment_id Int @id
-  disliked_by Int[] @default([]) // array of User IDs
+model CommentDislike {
+  id Int @id @default(autoincrement())
+  comment Int
+  user_id Int
 }

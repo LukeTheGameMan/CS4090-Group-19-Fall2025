@@ -79,21 +79,21 @@ export async function registerUser(req: Request, res: Response) {
             }
         });
 
-        // create UserPosts
-        await prisma.userPosts.create({
-            data: {
-                user_id: newUser.user_id,
-                username: newUser.username
-            }
-        });
+        // // create UserPosts
+        // await prisma.userPosts.create({
+        //     data: {
+        //         user_id: newUser.user_id,
+        //         username: newUser.username
+        //     }
+        // });
 
         // create UserComments
-        await prisma.userComments.create({
-            data: {
-                user_id: newUser.user_id,
-                username: newUser.username
-            }
-        });
+        // await prisma.userComments.create({
+        //     data: {
+        //         user_id: newUser.user_id,
+        //         username: newUser.username
+        //     }
+        // });
 
         res.status(201).json({
             success: true,
