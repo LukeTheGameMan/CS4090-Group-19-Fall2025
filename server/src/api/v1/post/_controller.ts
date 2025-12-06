@@ -95,21 +95,21 @@ export async function findManyPosts(req: Request, res: Response) {
         }
 
         // construct order obj for orderby condition
-        let order = {};
+        let order: any[] = [];
         if (filter === "liked") {
-            order = { postLikes: { _count: 'desc' }};
-        } else {
-            order = { post_id: 'desc' };
+            order.push({ postLikes: { _count: 'desc' } });
         }
+            order.push({ post_id: 'desc' }); // always sort by post_id for ties
+        
 
         const posts = await prisma.post.findMany({
             where: search,
             orderBy: order,
             skip: (pageNum - 1) * postsPerPage,
             take: postsPerPage,
-            include: { // get the counts for postlikes, postdislikes, and comments
-                user: { select: { username: true  } },
-                _count: {
+            include: { 
+                user: { select: { username: true } },
+                _count: { // get the counts for postlikes, postdislikes, and comments
                     select: {
                         postLikes: true,
                         postDislikes: true,
@@ -122,17 +122,17 @@ export async function findManyPosts(req: Request, res: Response) {
         const postlist = posts.map(post => ({
             post_id: post.post_id,
             title: post.title,
-            username: post.user?.username || "Unknown User",
+            username: post.user?.username || "Unknown User", // fallback in case for some reason the user cant be found
             likes_count: post._count.postLikes,
             dislikes_count: post._count.postDislikes,
-            comments: post._count.comments
+            comments_count: post._count.comments
         }));
 
         res.status(200).json({
             success: true,
             posts: postlist
         });
-        
+
     } catch (err) {
         console.error(err);
         res.status(500).json({
@@ -140,4 +140,68 @@ export async function findManyPosts(req: Request, res: Response) {
             error: "Server error"
         });
     }
+}
+
+/*
+    function: getPost
+    returns a post with the specified post_id
+*/
+export async function getPost(req: Request, res: Response) {
+    try {
+        const postID = parseInt(req.query.post_id as string) || -1;
+
+        if (postID == -1) {
+            return res.status(400).json({
+                success: false,
+                error: "Invalid request"
+            });
+        }
+
+        const post = await prisma.post.findFirst({
+            where: { post_id: postID },
+            include: { 
+                user: { select: { username: true } },
+                _count: { // get the counts for postlikes, postdislikes, and comments
+                    select: {
+                        postLikes: true,
+                        postDislikes: true,
+                        comments: true
+                    }
+                }
+            }
+        });
+
+        // if the post doesnt exist
+        if (!post) {
+            return res.status(404).json({
+                success: false,
+                error: "Post not found"
+            });
+        }
+
+        const postjson = {
+            post_id: post.post_id,
+            user_id: post.user_id,
+            username: post.user?.username || "Unknown User",
+            title: post.title,
+            content: post.content,
+            likes_count: post._count.postLikes,
+            dislikes_count: post._count.postDislikes,
+            comments_count: post._count.comments
+        };
+
+        res.status(200).json({
+            success: true,
+            post: postjson
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            error: "Server error"
+        });
+    }
+    
+    
 }
