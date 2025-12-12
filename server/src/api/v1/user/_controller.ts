@@ -79,21 +79,21 @@ export async function registerUser(req: Request, res: Response) {
             }
         });
 
-        // // create UserPosts
-        // await prisma.userPosts.create({
-        //     data: {
-        //         user_id: newUser.user_id,
-        //         username: newUser.username
-        //     }
-        // });
+        // create UserPosts
+        //await prisma.userPosts.create({
+        //    data: {
+        //        user_id: newUser.user_id,
+        //        username: newUser.username
+        //    }
+        //});
 
-        // create UserComments
-        // await prisma.userComments.create({
-        //     data: {
-        //         user_id: newUser.user_id,
-        //         username: newUser.username
-        //     }
-        // });
+        //// create UserComments
+        //await prisma.userComments.create({
+        //    data: {
+        //        user_id: newUser.user_id,
+        //        username: newUser.username
+        //    }
+        //});
 
         res.status(201).json({
             success: true,
@@ -102,6 +102,54 @@ export async function registerUser(req: Request, res: Response) {
         });
 
     } catch(err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            error: "Server error"
+        });
+    }
+}
+
+export async function loginUser(req: Request, res: Response) {
+    try {
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({
+                success: false,
+                error: "Missing username or password"
+            });
+        }
+
+        const user = await prisma.user.findUnique({
+            where: { username: username },
+        });
+
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                error: "Invalid username or password."
+            });
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password_hash);
+
+        if (!passwordMatch) {
+            return res.status(401).json({
+                success: false,
+                error: "Invalid username or password."
+            });
+        }
+
+        return res.status(200).json({
+            message: "Login successful.",
+            user: {
+                id: user.user_id,
+                username: user.username
+            }
+        });
+
+    } catch (err) {
         console.error(err);
         res.status(500).json({
             success: false,

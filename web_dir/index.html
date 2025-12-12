@@ -13,7 +13,7 @@
 			<h1>SoundScape</h1>
 		</header>
 		<section>
-			<form id="login" action="/login" method="GET">
+			<form id="login" onsubmit="login(event)">
 				<label for="username">
 					Username:
 				</label>
@@ -25,15 +25,17 @@
 				<input type="password" id="password" name="password" required>
 				<br>
 				<button type="submit">Log In</button>
+				<p id="failMsg"></p>
 			</form>
 			<br><br>
 			<form id="signup" action="/signup" method="GET">
 				<button type="submit">Sign Up</button>
 			</form>
-			<form id="guest" action="/guest" method="GET">
+			<form id="guest" action="main.html">
 				<button type="submit">No Login, Guest Only</button>
 			</form>
+			<button onclick="window.location.href='main.html'">Click ME!!!</button>
 		</section>
-		<script src="login.js"></script>
+		<script src="script/login.js"></script>
 	</body>
 </html>
