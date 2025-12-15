@@ -23,7 +23,26 @@
 		</section>
 		<section>
 			<h2>This is a thing.</h2>
+			<button id="new-post" onclick="window.location.href='make_post.html'">Create Post</button>
 		</section>
+		<div class="controls">
+			<input type="text" id="search-input" placeholder="Search posts...">
+			<button id="search-button">Search</button>
+
+			<div class="filters">
+				<button id="filter-recent">Recent</button>
+				<button id="filter-liked">Most Liked</button>
+			</div>
+		</div>
+
+		<div id="posts-container"></div>
+
+		<div class="pagination">
+			<button id="previous-page">← Previous</button>
+			<span id="page-info">Page 1</span>
+			<button id="next-page">Next →</button>
+		</div>
 		<script src="script/check_auth.js"></script>
+		<script src="script/see_posts.js"></script>
 	</body>
 </html>

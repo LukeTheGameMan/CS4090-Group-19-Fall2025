@@ -1,3 +1,9 @@
+// signup.js
+
+/*
+    function: signup
+    Signs up new user with username, email, and password.
+*/
 async function signup() {
     const form = document.getElementById("signup");
     const formInputs = new FormData(form)

@@ -1,8 +1,10 @@
+// check_auth.js
+
 let currentUser = null;
 
 /*
     function: checkAuth
-    Calls the /me endpoint to check if user can authenticate.
+    Calls the /me endpoint to check if user can authenticate
 */
 async function checkAuth() {
     try {
@@ -31,8 +33,8 @@ async function checkAuth() {
 
 /*
     function: initAuth
-    Checks user is authenticated, and checks their token every 5 minutes.
-    Currently has no guest user functionality.
+    Checks user is authenticated, and checks their token every 5 minutes
+    Currently has no guest user functionality
 */
 async function initAuth() {
     const user = await checkAuth();
@@ -54,5 +56,5 @@ async function initAuth() {
     }, 5 * 60 * 1000); // Check every 5 minutes.
 }
 
-// Start checking upon opening main.html
+// Start checking upon opening main.html.
 initAuth();

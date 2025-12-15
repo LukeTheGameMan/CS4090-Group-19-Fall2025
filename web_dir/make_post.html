@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Make new post">
+    <meta name="author" content="CS4090 Group 19">
+    <meta name="keywords" content="music, musician, song, tutorial, community, guide, forum, Q&A, theory, production, composing, composition, songwriting, recording, mixing, mastering">
+    <title>Login</title>
+</head>
+<body>
+    <header>
+        <h1>SoundScape</h1>
+    </header>
+    <section>
+        <h2>Create a Post</h2>
+        <form id="make_post" onsubmit="makePost(event)">
+            <label for="title">
+                Title:
+            </label>
+            <input type="text" id="title" name="title" placeholder="Enter post title..." required>
+            <br>
+            <label for="content">
+                Content:
+            </label>
+            <textarea id="content" name="content" placeholder="Enter content here..." required></textarea>
+            <br>
+            <button type="submit">Log In</button>
+            <p id="failMsg"></p>
+        </form>
+    </section>
+    <script src="script/check_auth.js"></script>
+    <script src="script/make_post.js"></script>
+</body>
+</html>
