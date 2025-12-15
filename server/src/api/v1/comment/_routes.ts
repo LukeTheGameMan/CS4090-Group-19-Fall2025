@@ -1,10 +1,12 @@
 import { Router } from 'express';
-import { createComment, getComments } from './_controller';
+import { createComment, findManyComments, voteComment } from './_controller';
+import { requireAuth } from '../auth/requireAuth';
 
 const router = Router();
 
 // register endpoints
-router.post("/create", createComment);
-router.get("/findmany?:post_id&:page", getComments);
+router.post("/createcomment", requireAuth, createComment);
+router.post("/votecomment", requireAuth, voteComment)
+router.get("/viewcomments", findManyComments);
 
 export default router;

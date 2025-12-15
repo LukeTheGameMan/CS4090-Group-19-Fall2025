@@ -24,6 +24,7 @@ model User {
   username String @db.VarChar(31) @unique
 
   posts Post[]
+  comments Comment[]
 }
 
 model UserPermission {
@@ -52,6 +53,7 @@ model Post {
   title String @db.Text
   content String @db.Text
   user_id Int
+  creation_date DateTime @default(now())
 
   postLikes PostLike[]
   postDislikes PostDislike[]
@@ -85,18 +87,27 @@ model Comment {
   content String @db.Text
   post_id Int 
   user_id Int
+  creation_date DateTime @default(now())
+
+  commentLikes CommentLike[]
+  commentDislikes CommentDislike[]
 
   post Post @relation(fields: [post_id], references: [post_id])
+  user User @relation(fields: [user_id], references: [user_id])
 }
 
 model CommentLike {
   id Int @id @default(autoincrement())
   comment_id Int
   user_id Int
+
+  comment Comment @relation(fields: [comment_id], references: [comment_id])
 }
 
 model CommentDislike {
   id Int @id @default(autoincrement())
-  comment Int
+  comment_id Int
   user_id Int
+
+  comment Comment @relation(fields: [comment_id], references: [comment_id])
 }

@@ -18,39 +18,12 @@ export async function createPost(req: Request, res: Response) {
             data: {
                 title: title,
                 content: content,
-                user_id: userID
+                user: {
+                    connect: { user_id: userID }
+                }
             }
         });
 
-        // // create PostLikes
-        // await prisma.postLikes.create({
-        //     data: {
-        //         post_id: post.post_id
-        //     }
-        // });
-
-        // // create PostDislikes
-        // await prisma.postDislikes.create({
-        //     data: {
-        //         post_id: post.post_id
-        //     }
-        // });
-
-        // // create PostComments
-        // await prisma.postComments.create({
-        //     data: {
-        //         post_id: post.post_id
-        //     }
-        // });
-
-        // // update UserPosts
-        // await prisma.userPosts.update({
-        //     where: { user_id: userID },
-        //     data: {
-        //         posts_created: { push: post.post_id }
-        //     }
-        // })
-    
         res.status(201).json({
             success: true,
             message: "Successfully created post!",
@@ -125,7 +98,8 @@ export async function findManyPosts(req: Request, res: Response) {
             username: post.user?.username || "Unknown User", // fallback in case for some reason the user cant be found
             likes_count: post._count.postLikes,
             dislikes_count: post._count.postDislikes,
-            comments_count: post._count.comments
+            comments_count: post._count.comments,
+            creation: post.creation_date
         }));
 
         res.status(200).json({
@@ -204,4 +178,94 @@ export async function getPost(req: Request, res: Response) {
     }
     
     
+}
+
+/*
+    function: votePost
+    likes a specified post_id given user_id from token
+*/
+export async function votePost(req: Request, res: Response) {
+    try {
+        const { post_id, like } = req.body;
+
+        const userID = (req as any).user.user_id;
+        const postID = Number(post_id);
+        const likeT = Number(like);
+
+        if (!Number.isInteger(postID) || (likeT !== 0 && likeT !== 1)) {
+            return res.status(400).json({
+                success: false,
+                error: "Invalid input"
+            });
+        }
+
+        // check if post_id exists
+        const post = await prisma.post.findFirst({
+            where: { post_id: postID }
+        });
+        // if the post doesnt exist
+        if (!post) {
+            return res.status(404).json({
+                success: false,
+                error: "Post not found"
+            });
+        }
+        
+        // check if like or dislike already exists
+        const likedpostcheck = await prisma.postLike.findFirst({
+            where: { 
+                post_id: postID,
+                user_id: userID
+            }
+        });
+
+        const dislikepostcheck = await prisma.postDislike.findFirst({
+            where: {
+                post_id: postID,
+                user_id: userID
+            }
+        });
+
+        if (likedpostcheck || dislikepostcheck) {
+            return res.status(409).json({
+                success: false,
+                error: "Already liked/disliked this post"
+            });
+        }
+
+        // create like or dislike
+        if (likeT == 1) {
+            const postlike = await prisma.postLike.create({
+                data: {
+                    post_id: postID,
+                    user_id: userID
+                }
+            });
+        } else if (likeT == 0) {
+            const postdislike = await prisma.postDislike.create({
+                data: {
+                    post_id: postID,
+                    user_id: userID
+                }
+            });
+        } else {
+            return res.status(400).json({
+                success: false,
+                error: "Error liking/disliking post"
+            });
+        }
+        
+        res.status(201).json({
+            success: true,
+            message: "Successfully liked/disliked post!",
+            post_id: postID
+        });
+    
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            error: "Server error"
+        });
+    }
 }
