@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
-
-const prisma = new PrismaClient();
+import { getPrisma } from '../../../prisma';
 
 export async function registerUser(req: Request, res: Response) {
     try {
+        const prisma = getPrisma();
         const { username, email, password } = req.body;
 
         // lots of checks

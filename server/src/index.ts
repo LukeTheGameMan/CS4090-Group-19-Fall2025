@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import app from './app';
-//import { registerUser } from './api/v1/';
 
 // load env variables
 dotenv.config();
@@ -25,6 +24,9 @@ app.get('/signup', (req: Request, res: Response) => {
     res.redirect('/signup.html');
 });
 
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-});
+// only start server if not in test mode
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => {
+        console.log(`Server running on http://localhost:${port}`);
+    });
+}

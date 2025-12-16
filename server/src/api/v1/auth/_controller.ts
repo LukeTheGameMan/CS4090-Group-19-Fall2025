@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { createToken } from './createToken';
-
-const prisma = new PrismaClient();
+import { getPrisma } from '../../../prisma';
 
 /*
     function: loginUser
     checks the username, password (hashed). if matching, then create a token for them.
 */
 export async function loginUser(req: Request, res: Response) {
+    const prisma = getPrisma();
+    
     const { username, password } = req.body;
 
     // compare usernames
@@ -32,7 +32,7 @@ export async function loginUser(req: Request, res: Response) {
     const token = createToken(user.user_id);
 
     res.cookie("token", token, { httpOnly: true, sameSite: "lax" });
-    res.json({ 
+    res.status(200).json({ 
         success: true,
         message: "Successfully logged in!"
     });
@@ -43,6 +43,8 @@ export async function loginUser(req: Request, res: Response) {
     created to test if the token works lol
 */
 export async function getCurrentUser(req: Request, res: Response) {
+    const prisma = getPrisma();
+    
     const userID = (req as any).user.user_id;
     const user = await prisma.user.findUnique({
         where: { user_id: userID },
@@ -52,5 +54,5 @@ export async function getCurrentUser(req: Request, res: Response) {
             email: true
         }
     });
-    res.json({ user });
+    res.status(200).json({ user });
 }

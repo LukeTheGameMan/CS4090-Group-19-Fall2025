@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 /*
-    function: validateUser
+    function: requireAuth
     checks to see if the user is authenticated by getting their JWT
     if authenticated, then call next_function()
 */

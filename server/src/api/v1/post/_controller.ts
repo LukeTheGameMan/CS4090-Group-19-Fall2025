@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { getPrisma } from '../../../prisma';
 
 /*
     function: createPost
@@ -9,6 +7,7 @@ const prisma = new PrismaClient();
 */
 export async function createPost(req: Request, res: Response) {
     try {
+        const prisma = getPrisma();
         const { title, content } = req.body;
 
         const userID = (req as any).user.user_id;
@@ -46,6 +45,7 @@ export async function createPost(req: Request, res: Response) {
 */
 export async function findManyPosts(req: Request, res: Response) {
     try {
+        const prisma = getPrisma();
         // get params from GET passed in browser url
         const queryRaw = req.query.query as string | undefined;
         const filter = (req.query.filter) as string || "recent"; // could be recent or liked
@@ -122,6 +122,7 @@ export async function findManyPosts(req: Request, res: Response) {
 */
 export async function getPost(req: Request, res: Response) {
     try {
+        const prisma = getPrisma();
         const postID = parseInt(req.query.post_id as string) || -1;
 
         if (postID == -1) {
@@ -187,6 +188,7 @@ export async function getPost(req: Request, res: Response) {
 */
 export async function votePost(req: Request, res: Response) {
     try {
+        const prisma = getPrisma();
         const { post_id, like } = req.body;
 
         const userID = (req as any).user.user_id;

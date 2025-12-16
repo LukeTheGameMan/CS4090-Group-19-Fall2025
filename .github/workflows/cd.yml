@@ -1,0 +1,47 @@
+name: CD
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: |
+          cd server
+          npm ci
+
+      - name: Run tests with coverage
+        run: |
+          cd server
+          NODE_ENV=test npm test -- --coverage
+
+      - name: Prepare coverage webpage
+        run: |
+          cd server
+          mkdir -p sites
+          cp -r coverage/lcov-report sites/
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: server/sites
+
+      - name: Deploy coverage page
+        uses: actions/deploy-pages@v4
