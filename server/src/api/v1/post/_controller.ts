@@ -161,7 +161,8 @@ export async function getPost(req: Request, res: Response) {
             content: post.content,
             likes_count: post._count.postLikes,
             dislikes_count: post._count.postDislikes,
-            comments_count: post._count.comments
+            comments_count: post._count.comments,
+            creation: post.creation_date
         };
 
         res.status(200).json({
