@@ -6,7 +6,7 @@
 */
 async function signup() {
     const form = document.getElementById("signup");
-    const formInputs = new FormData(form)
+    const formInputs = new FormData(form);
     const dataObject = Object.fromEntries(formInputs.entries());
     const jsonData = JSON.stringify(dataObject);
 

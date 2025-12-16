@@ -7,7 +7,12 @@
     "build": "npx tsc",
     "start": "npm run build && node dist/index.js",
     "watch": "npx tsc --watch",
+<<<<<<< Updated upstream
     "test": "jest --passWithNoTests"
+=======
+    "test": "jest",
+    "test:frontend": "jest --config server/jest.config.js"
+>>>>>>> Stashed changes
   },
   "keywords": [],
   "author": "",
