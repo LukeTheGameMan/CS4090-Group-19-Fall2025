@@ -5,13 +5,19 @@ let currentPostId = null;
 let postVoted = false;
 const votedComments = new Set();
 
-// Get post_id from URL
+/*
+    function: getPostIdFromUrl
+    Get post_id from URL query parameters
+*/
 function getPostIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
     return params.get('post_id');
 }
 
-// Check if user is authenticated
+/*
+    function: checkAuthStatus
+    Make sure user is authenticated for most of the tasks in this file
+*/
 async function checkAuthStatus() {
     try {
         const response = await fetch('/api/v1/auth/me', { credentials: 'include' });
@@ -27,7 +33,10 @@ async function checkAuthStatus() {
     return false;
 }
 
-// Load post
+/*
+    function: loadPost
+    Get post data from postId and pass to displayPost
+*/
 async function loadPost(postId) {
     const container = document.getElementById('post-container');
 
@@ -57,6 +66,10 @@ async function loadPost(postId) {
     }
 }
 
+/*
+    function: displayPost
+    Display post information on page
+*/
 function displayPost(post) {
     const container = document.getElementById('post-container');
 
@@ -125,7 +138,10 @@ function displayPost(post) {
     }
 }
 
-// Vote on post
+/*
+    function: voteOnPost
+    Lets user like or dislike on a post
+*/
 async function voteOnPost(like) {
     if (!currentUser) {
         alert('Please log in to vote');
@@ -203,6 +219,10 @@ async function voteOnPost(like) {
     }
 }
 
+/*
+    function: showVoteMessage
+    Shows message based on whether or not user was able to like or dislike
+*/
 function showVoteMessage(message, type) {
     const messageDiv = document.getElementById('vote-message');
     if (messageDiv) {
@@ -214,7 +234,10 @@ function showVoteMessage(message, type) {
     }
 }
 
-// Show comment form
+/*
+    function: showCommentForm
+    Shows the form for making comments after authenticating user
+*/
 function showCommentForm() {
     const formContainer = document.getElementById('comment-form-container');
 
@@ -239,7 +262,10 @@ function showCommentForm() {
     }
 }
 
-// Submit comment
+/*
+    function: submitComment
+    Creates new comment
+*/
 async function submitComment() {
     const input = document.getElementById('comment-input');
     const button = document.getElementById('submit-comment');
@@ -299,7 +325,10 @@ async function submitComment() {
     }
 }
 
-// Load comments
+/*
+    function: loadComments
+    Retrieves current list of comments attached to a given post by postID
+*/
 async function loadComments(postId) {
     const commentsContainer = document.getElementById('comments-list');
     commentsContainer.innerHTML = '<div class="loading">Loading comments...</div>';
@@ -322,6 +351,10 @@ async function loadComments(postId) {
     }
 }
 
+/*
+    function: displayComments
+    Shows current comments on a post
+*/
 function displayComments(comments) {
     const commentsContainer = document.getElementById('comments-list');
 
@@ -364,7 +397,10 @@ function displayComments(comments) {
     }
 }
 
-// Vote on comment
+/*
+    function: voteOnComment
+    Lets user give comments a like or dislike
+*/
 async function voteOnComment(commentId, like) {
     if (!currentUser) {
         alert('Please log in to vote');
@@ -442,6 +478,10 @@ async function voteOnComment(commentId, like) {
     }
 }
 
+/*
+    function: showCommentVoteMessage
+    Shows message based on whether or not user was able to like or dislike
+*/
 function showCommentVoteMessage(commentId, message, type) {
     const messageDiv = document.querySelector(`.comment-vote-message[data-comment-id="${commentId}"]`);
     if (messageDiv) {
@@ -453,13 +493,20 @@ function showCommentVoteMessage(commentId, message, type) {
     }
 }
 
+/*
+    function: escapeHtml
+    Turn input text into pure HTML text to prevent malicious strings.
+*/
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
-// Initialize page
+/*
+    function: init
+    Loads the current appearance of the post and its comments
+*/
 async function init() {
     currentPostId = getPostIdFromUrl();
 
@@ -477,5 +524,5 @@ async function init() {
     showCommentForm();
 }
 
-// Start when page loads
+// Start upon page opening
 init();
